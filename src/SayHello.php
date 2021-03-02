@@ -1,3 +1,4 @@
+<?php
 namespace annd\SayHello;
 class SayHello
 {
