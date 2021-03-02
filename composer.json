@@ -2,7 +2,7 @@
     "name": "annd/hello-world",
     "description": "the first composer package",
     "type": "php",
-    "license": "annd",
+    "license": "aaa",
     "authors": [
         {
             "name": "annd",
