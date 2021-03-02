@@ -1,0 +1,21 @@
+{
+    "name": "annd/hello-world",
+    "description": "the first composer package",
+    "type": "php",
+    "license": "annd",
+    "authors": [
+        {
+            "name": "annd",
+            "email": "ducan113951@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "annd\\SayHello\\": "src/"
+        }
+    }
+}
