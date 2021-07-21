@@ -1,0 +1,100 @@
+<?php
+
+if (!function_exists('gender_birth_day')) {
+    function gender_birth_day($birthdayNengoYear, $birthdayNengo)
+    {
+        $birthdayNengoYearConvert = '';
+        $year = '';
+        switch($birthdayNengoYear) {
+            case '明治':
+                $birthdayNengoYearConvert = 'M';
+                break;
+            case '大正':
+                $birthdayNengoYearConvert = 'T';
+                break;
+            case '昭和':
+                $birthdayNengoYearConvert = 'S';
+                break;
+            case '平成':
+                $birthdayNengoYearConvert = 'H';
+                break;
+            case '令和':
+                $birthdayNengoYearConvert = 'R';
+                break;
+        }
+        $explodeNengo = explode('年', $birthdayNengo);
+        $yearNengo = !empty($explodeNengo) ? $explodeNengo[0] : '';
+        $monthDayNengo = !empty($explodeNengo[1]) ? explode('月', $explodeNengo[1]) : '';
+        $monthNengo = !empty($monthDayNengo) ? $monthDayNengo[0] : '';
+        $dayFullNengo = !empty($monthDayNengo[1]) ? explode('日', $monthDayNengo[1]) : '';
+        $dayNengo = !empty($dayFullNengo) ? $dayFullNengo[0] : '';
+        $birthdayNengoConvert = $birthdayNengoYearConvert.$yearNengo. '/'. $monthNengo. '/'. $dayNengo;
+        switch ($birthdayNengoYearConvert) {
+            case 'M':
+                $year = (int)$yearNengo - 1 + 1868;
+                break;
+            case 'T':
+                $year = (int)$yearNengo - 1 + 1912;
+                break;
+            case 'S':
+                $year = (int)$yearNengo - 1 + 1926;
+                break;
+            case 'H':
+                $year = (int)$yearNengo - 1 + 1989;
+                break;
+            case 'R':
+                $year = (int)$yearNengo - 1 + 2019;
+                break;
+        }
+        $birthDayConvert = $year. '/'. $monthNengo. '/'. $dayNengo;
+
+        return [$birthdayNengoConvert, $birthDayConvert];
+    }
+}
+
+function mb_strrev($str){
+    $r = '';
+    for ($i = mb_strlen($str); $i>=0; $i--) {
+        $r .= mb_substr($str, $i, 1);
+    }
+    return $r;
+}
+
+if (!function_exists('mb_strrev')) {
+    function mb_strrev($str){
+        $r = '';
+        for ($i = mb_strlen($str); $i>=0; $i--) {
+            $r .= mb_substr($str, $i, 1);
+        }
+        return $r;
+    }
+}
+
+if (!function_exists('explode_strev')) {
+    function explode_strev($char, $string) 
+    {
+        return array_map('mb_strrev', explode($char, mb_strrev($string)));
+    }
+}
+
+if (!function_exists('handle_banchifull')) {
+    function handle_banchifull($banchifull) 
+    {
+        $banchifullBefore = '';
+        $banchifullAfter = $banchifull;
+        if (!empty(explode_strev('村', $banchifull)[1])) {
+            $banchifullAfter = explode_strev('村', $banchifull)[0];
+        } elseif (!empty(explode_strev('町', $banchifull)[1])) {
+            $banchifullAfter = explode_strev('町', $banchifull)[0];
+        } elseif (!empty(explode_strev('区', $banchifull)[1])) {
+            $banchifullAfter = explode_strev('区', $banchifull)[0];
+        } elseif (!empty(explode_strev('市', $banchifull)[1])) {
+            $banchifullAfter = explode_strev('市', $banchifull)[0];
+        } elseif (!empty(explode_strev('群', $banchifull)[1])) {
+            $banchifullAfter = explode_strev('群', $banchifull)[0];
+        }
+        $banchifullBefore = str_replace($banchifullAfter, '', $banchifull);
+
+        return [$banchifullBefore, $banchifullAfter];
+    }
+}
